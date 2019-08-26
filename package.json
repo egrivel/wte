@@ -1,0 +1,29 @@
+{
+  "name": "wte",
+  "version": "0.1.0",
+  "description": "Basic version of a Well-off Text Editor",
+  "repository": "https://github.com/egrivel/wte.git",
+  "license": "Apache-2.0",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "babel src --out-dir lib && cp src/*.css lib"
+  },
+  "dependencies": {
+    "draft-js": "^0.11.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.0",
+    "@babel/core": "^7.1.0",
+    "@babel/plugin-transform-runtime": "^7.4.4",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-react": "^7.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.0.0",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
+  }
+}

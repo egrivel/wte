@@ -1,0 +1,70 @@
+div.wte-wrapper {
+  margin: 5px;
+  padding: 5px;
+}
+
+div.wte-toolbar {
+  background-color: #f7f7f7;
+  border-radius: 5px;
+  padding: 0.5em;
+  height: 1.65em;
+  width: 40em;
+  margin-bottom: 5px;
+}
+
+span.wte-button,
+span.wte-button-active {
+  display: inline-block;
+  border-radius: 5px;
+  width: 1.5em;
+  height: 1.5em;
+  position: relative;
+  margin-right: 0.5em;
+}
+
+span.wte-button-divider {
+  display: inline-block;
+  width: 0.1em;
+  height: 1.5em;
+  position: relative;
+  margin-right: 0.5em;
+}
+
+span.wte-button {
+  border: solid 0.1em #333;
+  color: #333;
+}
+
+span.wte-button-active {
+  border: solid 0.1em #000;
+  background-color: #666;
+  color: #fff;
+}
+
+span.wte-button i,
+span.wte-button-active i,
+span.wte-button-divider i {
+  font-style: normal;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+div.wte {
+  border: solid 1px #f00;
+  padding: 5px;
+  width: 40em;
+  margin-bottom: 5px;
+  max-height: 40em;
+  overflow-y: scroll;
+}
+
+div.align-right {
+  text-align: right;
+}
+
+div.align-center {
+  text-align: center;
+}
