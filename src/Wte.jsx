@@ -1,16 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import {
   ContentState,
   convertFromHTML,
   convertToRaw,
   Editor,
   EditorState,
+  getDefaultKeyBinding,
+  KeyBindingUtil,
   RichUtils
 } from 'draft-js';
+const {hasCommandModifier} = KeyBindingUtil;
 
 import './Wte.css';
 
+// Define constants for buttons that match the draft.js internal names
 const BOLD = 'BOLD';
 const ITALIC = 'ITALIC';
 const UNDERLINE = 'UNDERLINE';
@@ -21,6 +26,11 @@ const LIST_OL = 'ordered-list-item';
 const LEFT = 'unstyled';
 const CENTER = 'center';
 const RIGHT = 'right';
+
+// Define constants for key bindings
+const CMD_BOLD = 'cmd-bold';
+const CMD_ITALIC = 'cmd-italic';
+const CMD_UNDERLINE = 'cmd-underline';
 
 class Wte extends React.Component {
   constructor(props) {
@@ -43,7 +53,7 @@ class Wte extends React.Component {
       html: this.contentBlocksToHtml(rawContent.blocks),
       value: JSON.stringify(rawContent)
     };
-}
+  }
 
   convertSingleBlockToHtml(block) {
     let html = '';
@@ -185,19 +195,19 @@ class Wte extends React.Component {
     switch(type) {
       case BOLD:
         faClassName = 'fa fa-bold';
-        title = 'Bold';
+        title = 'Bold Ctrl+B';
         changeFunc = (event) => this.onChange(event,
           RichUtils.toggleInlineStyle(editorState, type));
         break;
       case ITALIC:
         faClassName = 'fa fa-italic';
-        title = 'Italic';
+        title = 'Italic Ctrl+I';
         changeFunc = (event) => this.onChange(event,
           RichUtils.toggleInlineStyle(editorState, type));
         break;
       case UNDERLINE:
         faClassName = 'fa fa-underline';
-        title = 'Underline';
+        title = 'Underline Ctrl+U';
         changeFunc = (event) => this.onChange(event,
           RichUtils.toggleInlineStyle(editorState, type));
         break;
@@ -247,9 +257,48 @@ class Wte extends React.Component {
     );
   }
 
+  // Handle keys: use the keyBindings() to recognize the keys we want to
+  // handle and issue a command; that command is then processed by the
+  // handleKeyCommand() below.
+  // See https://draftjs.org/docs/advanced-topics-key-bindings for background.
+  keyBindings(event) {
+    if (hasCommandModifier(event)) {
+      switch (event.keyCode) {
+        case 66: // 'B'
+          console.log(CMD_BOLD);
+          return CMD_BOLD;
+        case 73: // 'I'
+          console.log(CMD_ITALIC);
+          return CMD_ITALIC;
+        case 85: // 'U'
+          console.log(CMD_UNDERLINE);
+          return CMD_UNDERLINE;
+      }
+    }
+    return getDefaultKeyBinding(event);
+  }
+
+  handleKeyCommand(command, editorState) {
+    switch(command) {
+      case CMD_BOLD:
+        this.onChange(null, RichUtils.toggleInlineStyle(editorState, BOLD));
+        return 'handled';
+      case CMD_ITALIC:
+        this.onChange(null, RichUtils.toggleInlineStyle(editorState, ITALIC));
+        return 'handled';
+      case CMD_UNDERLINE:
+        this.onChange(null, RichUtils.toggleInlineStyle(editorState, UNDERLINE));
+        return 'handled';
+    }
+
+    // Return value indicating that the command was not handled (results
+    // in default handling)
+    return 'not-handled';
+  }
+
   render() {
     const {label} = this.props;
-    const {editorState, html, value} = this.state;
+    const {editorState, value} = this.state;
     return (
       <div className="wte-wrapper">
         <div><b>{label}</b></div>
@@ -258,17 +307,18 @@ class Wte extends React.Component {
           {this.renderButton(ITALIC, editorState)}
           {this.renderButton(UNDERLINE, editorState)}
           {this.renderButtonDivider()}
-          {this.renderButton(LIST, editorState)}
-          {this.renderButton(LIST_OL, editorState)}
-          {this.renderButtonDivider()}
           {this.renderButton(LEFT, editorState)}
           {this.renderButton(CENTER, editorState)}
           {this.renderButton(RIGHT, editorState)}
+          {this.renderButton(LIST, editorState)}
+          {this.renderButton(LIST_OL, editorState)}
         </div>
         <div className="wte">
           <Editor
             blockStyleFn={block => {return this.getBlockStyle(block)}}
             editorState={editorState}
+            handleKeyCommand={command => this.handleKeyCommand(command, editorState)}
+            keyBindingFn={event => this.keyBindings(event)}
             onChange={newEditorState => this.onChange(null, newEditorState)}
           />
         </div>
