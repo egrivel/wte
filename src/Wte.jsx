@@ -272,8 +272,7 @@ class Wte extends React.Component {
             onChange={newEditorState => this.onChange(null, newEditorState)}
           />
         </div>
-        <p><b>Exported state</b>: {html}</p>
-        <p><b>Internal state</b>: {value}</p>
+        <p><b>Internal state</b> shown for debugging: {value}</p>
       </div>
     );
   }
