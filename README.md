@@ -65,3 +65,6 @@ can be active in any particular line. Lists cannot be nested.
 The `draft.js` module also supports headings, block quotes and some other
 markup. This is not disabled and can be inserted through a Ctrl+V paste
 operation, but these features are not supported through the UI.
+
+The red border around the input was chosen randomly to highlight the input
+area.
