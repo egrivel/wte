@@ -46,3 +46,22 @@ Inside the application component's render function:
     />
   );
 ```
+
+## Limitations
+
+The WTE component supports bold, italic, and underline for inline formatting.
+Inline formatting is additive, that is, multiple styles can be combined.
+
+It supports five paragraph types:
+ - left-aligned (default)
+ - centered
+ - right-aligned
+ - bullet list
+ - numbered list
+
+Paragraph types are mutually exclusive, that is, only one of the five types
+can be active in any particular line. Lists cannot be nested.
+
+The `draft.js` module also supports headings, block quotes and some other
+markup. This is not disabled and can be inserted through a Ctrl+V paste
+operation, but these features are not supported through the UI.
