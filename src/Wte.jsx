@@ -142,7 +142,7 @@ class Wte extends React.Component {
       html,
       value: JSON.stringify(rawContent)
     });
-    this.props.onChange(html);
+    this.props.onUpdate(html);
   }
 
   getBlockStyle(block) {
@@ -282,7 +282,7 @@ class Wte extends React.Component {
 Wte.propTypes = {
   defaultValue: PropTypes.string,
   label: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired
 };
 
 export default Wte;
